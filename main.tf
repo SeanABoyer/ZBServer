@@ -116,6 +116,13 @@ resource "aws_security_group" "security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
+    description = "SSH"
+    from_port = 20
+    to_port = 20
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
     description = "HTTPS"
     from_port = 443
     to_port = 443
