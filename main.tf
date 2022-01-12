@@ -68,7 +68,7 @@ resource "aws_instance" "pz_server" {
 }
 resource "aws_key_pair" "ssh_key" {
   key_name = "ssh-key"
-  public_key = vars.public_ssh_key
+  public_key = var.public_ssh_key
 
     tags = {
     Name = "Project_Zomboid-${random_uuid.server_name.result}"
