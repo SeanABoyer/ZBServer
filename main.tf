@@ -59,8 +59,8 @@ resource "aws_route" "route_ign_to_vpc" {
 resource "aws_subnet" "subnet" {
   vpc_id = aws_vpc.vpc.id
   cidr_block = var.subnet_cidr_block
-
-    map_public_ip_on_launch = true
+  availability_zone = "us-west-2a"
+  map_public_ip_on_launch = true
 
 
     depends_on = [aws_internet_gateway.gw]
