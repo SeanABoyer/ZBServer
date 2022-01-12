@@ -99,33 +99,33 @@ resource "aws_instance" "pz_server" {
 
   key_name = "pz_ssh_key"
 
-  security_groups = [aws_security_group.security_group]
+  vpc_security_group_ids = [aws_security_group.security_group.id]
 }
 
 resource "aws_security_group" "security_group" {
+
+  vpc_id = aws_vpc.vpc.id
+
   ingress {
     description = "HTTP"
     from_port = 80
     to_port = 80
     protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     description = "HTTPS"
     from_port = 443
     to_port = 443
     protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
+  #Allow all outbound
   egress {
-    description = "HTTP"
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
-  }
-  egress {
-    description = "HTTPS"
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
