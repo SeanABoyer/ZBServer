@@ -64,10 +64,10 @@ resource "aws_instance" "pz_server" {
 
   subnet_id = aws_subnet.subnet.id
 
-  key_name = aws_key_pair.ssh_key
+  key_name = "pz_ssh_key"
 }
 resource "aws_key_pair" "ssh_key" {
-  key_name = "ssh-key"
+  key_name = "pz_ssh_key"
   public_key = var.public_ssh_key
 
     tags = {
