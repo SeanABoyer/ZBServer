@@ -26,36 +26,41 @@ resource "aws_vpc" "vpc" {
     }
 }
 
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.vpc.id
+}
+
 resource "aws_subnet" "subnet" {
     vpc_id = aws_vpc.vpc.id
     cidr_block = "10.0.1.0/24"
+
+     map_public_ip_on_launch = true
+
+
+     depends_on = [aws_internet_gateway.gw]
     tags = {
         Name = "Project_Zomboid-${random_uuid.server_name.result}"
         Game = "Project_Zomboid"
     }
 }
 
-resource "aws_network_interface" "nic" {
-    subnet_id = aws_subnet.subnet.id
-    private_ips = ["10.0.1.100"]
-    tags = {
-        Name = "Project_Zomboid-${random_uuid.server_name.result}"
-        Game = "Project_Zomboid"
-    }
+resource "aws_eip" "eip" {
+  instance = aws_instance.pz_server.id
+  vpc = true
+  associate_with_private_ip = "10.0.1.100"
+  depends_on                = [aws_internet_gateway.gw]
 }
 
-
-resource "aws_instance" "web" {
+resource "aws_instance" "pz_server" {
   ami           = data.aws_ami.debian.id
   instance_type = "t2.medium"
+
+  private_ip = "10.0.1.100"
 
   tags = {
     Name = "Project_Zomboid-${random_uuid.server_name.result}"
     Game = "Project_Zomboid"
   }
 
-  network_interface {
-      network_interface_id = aws_network_interface.nic.id
-      device_index = 0
-  }
+  subnet_id = aws_subnet.subnet.id
 }
