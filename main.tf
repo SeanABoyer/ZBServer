@@ -63,4 +63,15 @@ resource "aws_instance" "pz_server" {
   }
 
   subnet_id = aws_subnet.subnet.id
+
+  key_name = aws_key_pair.ssh-key
+}
+resource "aws_key_pair" "ssh-key" {
+  key_name = "ssh-key"
+  public_key = vars.public_ssh_key
+
+    tags = {
+    Name = "Project_Zomboid-${random_uuid.server_name.result}"
+    Game = "Project_Zomboid"
+  }
 }
