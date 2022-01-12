@@ -35,11 +35,6 @@ resource "aws_route" "route_ign_to_vpc" {
   route_table_id = aws_vpc.vpc.main_route_table_id
   destination_cidr_block = var.cidr_block
   gateway_id = aws_internet_gateway.gw.id
-  
-  tags = {
-    Name = "Project_Zomboid-${random_uuid.server_name.result}"
-    Game = "Project_Zomboid"
-  }
 }
 
 resource "aws_vpc" "vpc" {
