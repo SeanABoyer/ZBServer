@@ -82,28 +82,6 @@ resource "aws_eip" "eip" {
   }
 }
 
-/*
- Network End
-*/
-
-resource "aws_instance" "pz_server" {
-  ami           = data.aws_ami.debian.id
-  instance_type = "t2.medium"
-
-  private_ip = "10.0.1.100"
-
-  tags = {
-    Name = "Project_Zomboid-${random_uuid.server_name.result}"
-    Game = "Project_Zomboid"
-  }
-
-  subnet_id = aws_subnet.subnet.id
-
-  key_name = "pz_ssh_key"
-
-  vpc_security_group_ids = [aws_security_group.security_group.id]
-}
-
 resource "aws_security_group" "security_group" {
 
   vpc_id = aws_vpc.vpc.id
@@ -125,5 +103,39 @@ resource "aws_security_group" "security_group" {
   tags = {
       Name = "Project_Zomboid-${random_uuid.server_name.result}"
       Game = "Project_Zomboid"
+  }
+}
+
+/*
+ Network End
+*/
+
+resource "aws_instance" "pz_server" {
+  ami           = data.aws_ami.debian.id
+  instance_type = "t2.medium"
+
+  private_ip = "10.0.1.100"
+
+  tags = {
+    Name = "Project_Zomboid-${random_uuid.server_name.result}"
+    Game = "Project_Zomboid"
+  }
+
+  subnet_id = aws_subnet.subnet.id
+
+  key_name = "pz_ssh_key"
+
+  vpc_security_group_ids = [aws_security_group.security_group.id]
+
+  provisioner "file" {
+    source      = "installPZserver.sh"
+    destination = "/tmp/installScript.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/installScript.sh",
+      "/tmp/installScript.sh >> /tmp/installScript.txt",
+    ]
   }
 }
