@@ -27,7 +27,7 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "subnet" {
-    vpc_id = aws_vpc.vpc
+    vpc_id = aws_vpc.vpc.id
     cidr_block = "10.0.1.0/24"
     tags = {
         Name = "Project_Zomboid-${random_uuid.server_name.result}"
@@ -36,7 +36,7 @@ resource "aws_subnet" "subnet" {
 }
 
 resource "aws_network_interface" "nic" {
-    subnet_id = aws_subnet.subnet
+    subnet_id = aws_subnet.subnet.id
     private_ips = ["10.0.1.1"]
     tags = {
         Name = "Project_Zomboid-${random_uuid.server_name.result}"
