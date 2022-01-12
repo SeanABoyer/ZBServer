@@ -33,12 +33,12 @@ resource "aws_key_pair" "ssh_key" {
 */ 
 resource "aws_route" "route_ign_to_vpc" {
   route_table_id = aws_vpc.vpc.main_route_table_id
-  destination_cidr_block = var.cidr_block
+  destination_cidr_block = var.subnet_cidr_block
   gateway_id = aws_internet_gateway.gw.id
 }
 
 resource "aws_vpc" "vpc" {
-  cidr_block = var.cidr_block
+  cidr_block = var.vpc_cidr_block
   tags = {
       Name = "Project_Zomboid-${random_uuid.server_name.result}"
       Game = "Project_Zomboid"
@@ -56,7 +56,7 @@ resource "aws_internet_gateway" "gw" {
 
 resource "aws_subnet" "subnet" {
   vpc_id = aws_vpc.vpc.id
-  cidr_block = "10.0.1.0/24"
+  cidr_block = var.subnet_cidr_block
 
     map_public_ip_on_launch = true
 
