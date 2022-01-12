@@ -1,3 +1,11 @@
+terraform {
+  required_version = ">=1.1.3"
+}
+
+provider "aws" {
+  region = "us-west-2"
+}
+
 data "aws_ami" "debian" {
   most_recent = true
   filter {
