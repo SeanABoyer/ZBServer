@@ -51,7 +51,7 @@ resource "aws_network_interface" "nic" {
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.debian.id
-  instance_type = aws_ec2_instance_type.instance_type
+  instance_type = data.aws_ec2_instance_type.instance_type
 
   tags = {
     Name = "Project_Zomboid-${random_uuid.server_name.result}"
