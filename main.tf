@@ -37,7 +37,7 @@ resource "aws_subnet" "subnet" {
 
 resource "aws_network_interface" "nic" {
     subnet_id = aws_subnet.subnet.id
-    private_ips = ["10.0.1.1"]
+    private_ips = ["10.0.1.100"]
     tags = {
         Name = "Project_Zomboid-${random_uuid.server_name.result}"
         Game = "Project_Zomboid"
