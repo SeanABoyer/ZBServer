@@ -1,8 +1,8 @@
-data "aws_ami" "ubuntu" {
+data "aws_ami" "debian" {
   most_recent = true
   filter {
     name   = "name"
-    values = "debian-10-amd64-20211011-*"
+    values = ["debian-10-amd64-20211011-*"]
   }
   owners = ["136693071363"] #Debian Buster [https://wiki.debian.org/Cloud/AmazonEC2Image/Buster]
 }
@@ -29,7 +29,7 @@ resource "aws_subnet" "subnet" {
 
 resource "aws_network_interface" "nic" {
     subnet_id = aws_subnet.subnet
-    private_ips = "10.0.1.1"
+    private_ips = ["10.0.1.1"]
     tags = {
         Name = "Project_Zomboid-${random_uuid.server_name.result}"
         Game = "Project_Zomboid"
@@ -38,7 +38,7 @@ resource "aws_network_interface" "nic" {
 
 
 resource "aws_instance" "web" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.debian.id
   instance_type = "t4g.medium" //Should support up to 30 players
 
   tags = {
