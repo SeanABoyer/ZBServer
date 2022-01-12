@@ -31,12 +31,6 @@ resource "aws_key_pair" "ssh_key" {
 /*
  Network Start
 */ 
-resource "aws_route" "route_ign_to_vpc" {
-  route_table_id = aws_vpc.vpc.main_route_table_id
-  destination_cidr_block = var.subnet_cidr_block
-  gateway_id = aws_internet_gateway.gw.id
-}
-
 resource "aws_vpc" "vpc" {
   cidr_block = var.vpc_cidr_block
   tags = {
@@ -52,6 +46,14 @@ resource "aws_internet_gateway" "gw" {
       Name = "Project_Zomboid-${random_uuid.server_name.result}"
       Game = "Project_Zomboid"
   }
+}
+
+resource "aws_route" "route_ign_to_vpc" {
+  route_table_id = aws_vpc.vpc.main_route_table_id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.gw.id
+
+  depends_on = [aws_internet_gateway.gw]
 }
 
 resource "aws_subnet" "subnet" {
