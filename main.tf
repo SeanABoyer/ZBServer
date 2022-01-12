@@ -1,7 +1,7 @@
 data "aws_ami" "ubuntu" {
   most_recent = true
   filter {
-    name   = "image-id"
+    name   = "name"
     values = "debian-10-amd64-20211011-*"
   }
   owners = ["136693071363"] #Debian Buster [https://wiki.debian.org/Cloud/AmazonEC2Image/Buster]
@@ -11,7 +11,7 @@ resource "random_uuid" "server_name" {}
 
 
 resource "aws_vpc" "vpc" {
-    cidr_block = "10.0.0.0/8"
+    cidr_block = "10.0.0.0/16"
     tags = {
         Name = "Project_Zomboid-${random_uuid.server_name.result}"
         Game = "Project_Zomboid"
