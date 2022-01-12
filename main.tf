@@ -15,6 +15,10 @@ data "aws_ami" "debian" {
   owners = ["136693071363"] #Debian Buster [https://wiki.debian.org/Cloud/AmazonEC2Image/Buster]
 }
 
+data "aws_ec2_instance_type" "instance_type" {
+  instance_type = "t2.medium"
+}
+
 resource "random_uuid" "server_name" {}
 
 
@@ -47,7 +51,7 @@ resource "aws_network_interface" "nic" {
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.debian.id
-  instance_type = "t4g.medium" //Should support up to 30 players
+  instance_type = aws_ec2_instance_type.instance_type
 
   tags = {
     Name = "Project_Zomboid-${random_uuid.server_name.result}"
