@@ -112,6 +112,7 @@ resource "aws_security_group" "security_group" {
 
 resource "aws_instance" "pz_server" {
   ami           = data.aws_ami.debian.id
+  availability_zone = "us-west-2a"
   instance_type = "t2.medium"
 
   private_ip = "10.0.1.100"
