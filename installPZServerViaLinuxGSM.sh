@@ -9,18 +9,20 @@ finishLog () {
     date=$(date '+%d/%m/%Y %H:%M:%S')
     echo "[$date][Completed] $log_message"
 }
-startLog "Password is $password"
+
 startLog "Updating System"
 sudo apt-get update -y
 finishLog "Updating System"
 
+startLog "Installing Packages"
+sudo dpkg --add-architecture i386; sudo apt update; sudo apt install bc binutils jq lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 netcat openjdk-11-jre rng-tools steamcmd tmux unzip
+finishLog "Installing Packages"
+
 startLog "Creating User and Changing User"
 sudo useradd pzserver -p $password -m
-sudo su pzserver
+sudo su pzserver -c "wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh pzserver && yes | ./pzserver install"
 finishLog "Creating User and Changing User"
 
-startLog "Download linuxgsm.sh"
-wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh pzserver
-finishLog "Download linuxgsm.sh"
+startLog "Download linuxgsm.sh and install server"
 
-./pzserver install
+finishLog "Download linuxgsm.sh and install server"
