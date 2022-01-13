@@ -85,12 +85,26 @@ resource "aws_eip" "eip" {
 resource "aws_security_group" "security_group" {
 
   vpc_id = aws_vpc.vpc.id
-
+  #Allow all inbound
   ingress {
     description = "SSH"
     from_port = 22
     to_port = 22
     protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "PZserver Port"
+    from_port = 8766
+    to_port = 8766
+    protocol = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "PZserver Port"
+    from_port = 16261
+    to_port = 16261
+    protocol = "udp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   #Allow all outbound
