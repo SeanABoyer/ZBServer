@@ -136,6 +136,7 @@ resource "aws_instance" "pz_server" {
       type = "ssh"
       private_key = var.private_ssh_key
       user = var.ssh_user
+      host = self.public_ip
     }
   }
 
@@ -144,11 +145,12 @@ resource "aws_instance" "pz_server" {
       "chmod +x /tmp/installScript.sh",
       "/tmp/installScript.sh >> /tmp/installScript.txt",
     ]
-    
+
     connection {
       type = "ssh"
       private_key = var.private_ssh_key
       user = var.ssh_user
+      host = self.public_ip
     }
   }
 }
