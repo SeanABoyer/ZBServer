@@ -143,7 +143,7 @@ resource "aws_instance" "pz_server" {
   vpc_security_group_ids = [aws_security_group.security_group.id]
 
   provisioner "file" {
-    source      = "installPZserver.sh"
+    source      = "installPZServerViaLinuxGSM.sh"
     destination = "/tmp/installScript.sh"
 
     connection {
@@ -157,7 +157,7 @@ resource "aws_instance" "pz_server" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/installScript.sh",
-      "/tmp/installScript.sh >> /tmp/installScript.txt",
+      "/tmp/installScript.sh ${var.password} >> /tmp/installScript.txt",
     ]
 
     connection {
