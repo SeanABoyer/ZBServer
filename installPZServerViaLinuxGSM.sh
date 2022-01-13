@@ -14,9 +14,8 @@ sudo apt-get update
 finishLog "Updating System"
 
 startLog "Creating User and Changing User"
-adduser pzserver
-echo "${$1}" | passwd pzserver --stdin
-echo $1 |su -S pzserver
+sudo adduser pzserver -p $1
+sudo su pzserver
 finishLog "Creating User and Changing User"
 
 startLog "Download linuxgsm.sh"
