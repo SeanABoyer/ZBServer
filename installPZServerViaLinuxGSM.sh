@@ -28,7 +28,7 @@ finishLog "Installing Packages"
 startLog "Creating User and Changing User"
 sudo useradd pzserver -p $password -m
 sudo chown -R pzserver:pzserver /home/pzserver
-sudo -H -u pzserver bash -c "wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh pzserver && yes | ./pzserver install"
+sudo -H -u pzserver bash -c "cd ~ && wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh pzserver && yes | ./pzserver install && ./pzserver start"
 finishLog "Creating User and Changing User"
 
 startLog "Download linuxgsm.sh and install server"
