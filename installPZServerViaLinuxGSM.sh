@@ -19,8 +19,8 @@ sudo apt-get install software-properties-common -y
 sudo apt-add-repository contrib
 sudo apt-add-repository non-free
 sudo dpkg --add-architecture i386
-sudo apt update
-sudo apt install bc binutils jq lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 netcat openjdk-11-jre rng-tools steamcmd tmux unzip
+sudo apt update -y
+sudo apt install bc binutils jq lib32gcc1 lib32stdc++6 libsdl2-2.0-0:i386 netcat openjdk-11-jre rng-tools steamcmd tmux unzip -y
 finishLog "Installing Packages"
 
 startLog "Creating User and Changing User"
