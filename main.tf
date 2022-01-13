@@ -131,6 +131,12 @@ resource "aws_instance" "pz_server" {
   provisioner "file" {
     source      = "installPZserver.sh"
     destination = "/tmp/installScript.sh"
+
+    connection {
+      type = "ssh"
+      private_key = var.private_ssh_key
+      user = var.ssh_user
+    }
   }
 
   provisioner "remote-exec" {
@@ -138,5 +144,11 @@ resource "aws_instance" "pz_server" {
       "chmod +x /tmp/installScript.sh",
       "/tmp/installScript.sh >> /tmp/installScript.txt",
     ]
+    
+    connection {
+      type = "ssh"
+      private_key = var.private_ssh_key
+      user = var.ssh_user
+    }
   }
 }
