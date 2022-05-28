@@ -120,6 +120,19 @@ resource "aws_security_group" "security_group" {
   }
 }
 
+data aws_route53_zone "DNSZone"{
+  name = "seanboyer.us"
+}
+resource aws_route53_record  "mcDNSRecord" {
+  zone_id = data.aws_route53_zone.DNSZone.zone_id
+  name = "pz.seanboyer.us"
+  type = "A"
+  ttl = "300"
+  records = [
+    aws_eip.eip.public_ip
+  ]
+}
+
 /*
  Network End
 */
