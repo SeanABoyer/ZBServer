@@ -125,7 +125,7 @@ data aws_route53_zone "DNSZone"{
 }
 resource aws_route53_record  "mcDNSRecord" {
   zone_id = data.aws_route53_zone.DNSZone.zone_id
-  name = "pz.seanboyer.us"
+  name = "pzold.seanboyer.us"
   type = "A"
   ttl = "300"
   records = [
